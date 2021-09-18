@@ -54,6 +54,11 @@ RUN apt-get update && \
         pkgconf \
         sudo \
         xutils-dev \
+        jq \
+        python3 \
+        libxcb-xfixes0-dev \
+        libxkbcommon-dev \
+        gcc-mingw-w64 \
         && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     useradd rust --user-group --create-home --shell /bin/bash --groups sudo && \
@@ -146,7 +151,9 @@ RUN curl https://sh.rustup.rs -sSf | \
     env CARGO_HOME=/opt/rust/cargo \
         rustup component add clippy && \
     env CARGO_HOME=/opt/rust/cargo \
-        rustup target add x86_64-unknown-linux-musl
+        rustup target add x86_64-unknown-linux-musl && \
+    env CARGO_HOME=/opt/rust/cargo \
+        rustup target add x86_64-pc-windows-gnu
 ADD cargo-config.toml /opt/rust/cargo/config
 
 # Set up our environment variables so that we cross-compile using musl-libc by
